@@ -9,7 +9,7 @@ export function useParallax(
   factor = 0.2,
   direction: "up" | "down" | "left" | "right" = "up"
 ) {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
     const el = ref.current;

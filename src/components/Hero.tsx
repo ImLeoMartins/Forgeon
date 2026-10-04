@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import SpinningBorderButton from "@/components/ui/spinning-border-button";
-import { useParallax } from "@/hooks/useParallax";
+import { useParallax,  } from "@/hooks/useParallax";
 import { ParticlesBackground } from "./ParticlesBackground";
 
 // Import do símbolo real da Forgeon

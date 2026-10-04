@@ -1,13 +1,14 @@
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { defineConfig } from 'vite'
-import { fileURLToPath, URL } from 'url'
+import path from 'path/win32';
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  base: "/Forgeon/",
   resolve: {
-    alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
+  alias: {
+      "@": path.resolve(__dirname, "./src"),
     },
   },
-})
+});
