@@ -1,0 +1,13 @@
+// Cloudflare Workers com arquivos estáticos: serve a pasta dist gerada por `npm run build`.
+// O build roda no Cloudflare (Workers Builds) a cada push na branch configurada.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "forgeon",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    // /pt/ serve dist/pt/index.html; endereço inexistente recebe dist/404.html com status 404
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}
