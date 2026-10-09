@@ -1,10 +1,11 @@
 import { NAV_SYMBOL_PATHS, WORDMARK_PATH } from "@/lib/svgAssets";
 import { MessageCircle } from "lucide-react";
-import { useT } from "@/i18n";
+import { goToSection, useLang, useT } from "@/i18n";
 import { useWhatsApp } from "@/lib/whatsapp";
 
 export function Footer() {
   const t = useT();
+  const lang = useLang();
   const whatsapp = useWhatsApp();
   const footerLinks = [
     { href: "#servicos", label: t.nav.services },
@@ -36,8 +37,14 @@ export function Footer() {
       >
         {/* Logo */}
         <a
-          href="#top"
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          href={`/${lang}/`}
+          onClick={(e) => {
+            // Na home, só volta ao topo; numa página de case, o link leva à home.
+            if (document.getElementById("servicos")) {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+          }}
           aria-label={t.nav.home}
           style={{ display: "flex", alignItems: "center", gap: 10 }}
         >
@@ -66,10 +73,10 @@ export function Footer() {
           {footerLinks.map(({ href, label }) => (
             <a
               key={href}
-              href={href}
+              href={`/${lang}/${href}`}
               onClick={(e) => {
                 e.preventDefault();
-                document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+                goToSection(lang, href);
               }}
               style={{
                 color: "#6C6F82",

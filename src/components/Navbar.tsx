@@ -3,7 +3,7 @@ import SpinningBorderButton from "@/components/ui/spinning-border-button";
 import { NAV_SYMBOL_PATHS, WORDMARK_PATH } from "@/lib/svgAssets";
 import { Menu, X } from "lucide-react";
 import { LangSwitcher } from "@/components/LangSwitcher";
-import { useT } from "@/i18n";
+import { goToSection, useLang, useT } from "@/i18n";
 import { useWhatsApp } from "@/lib/whatsapp";
 
 const sectionIds = ["servicos", "projetos", "processo"] as const;
@@ -13,6 +13,7 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const t = useT().nav;
+  const lang = useLang();
   const whatsapp = useWhatsApp();
   const openWhatsApp = () => {
     setMobileOpen(false);
@@ -57,8 +58,7 @@ export function Navbar() {
 
   const handleNavClick = (href: string) => {
     setMobileOpen(false);
-    const el = document.querySelector(href);
-    el?.scrollIntoView({ behavior: "smooth" });
+    goToSection(lang, href);
   };
 
   return (
@@ -92,9 +92,15 @@ export function Navbar() {
       >
         {/* Logo */}
         <a
-          href="#top"
+          href={`/${lang}/`}
           aria-label={t.home}
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          onClick={(e) => {
+            // Na home, só volta ao topo; numa página de case, o link leva à home.
+            if (document.getElementById("servicos")) {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+          }}
           style={{
             display: "flex",
             alignItems: "center",
@@ -138,7 +144,7 @@ export function Navbar() {
             return (
               <li key={href}>
                 <a
-                  href={href}
+                  href={`/${lang}/${href}`}
                   onClick={(e) => {
                     e.preventDefault();
                     handleNavClick(href);
@@ -231,7 +237,7 @@ export function Navbar() {
           {navLinks.map(({ href, label }) => (
             <a
               key={href}
-              href={href}
+              href={`/${lang}/${href}`}
               onClick={(e) => {
                 e.preventDefault();
                 handleNavClick(href);

@@ -4,13 +4,15 @@ import { LANGS, LANG_LABELS, rememberLang, useLang, useT } from "@/i18n";
 export function LangSwitcher({ size = 13 }: { size?: number }) {
   const current = useLang();
   const t = useT();
+  // Mantém a página atual: /pt/cases/ditaly/ vira /es/cases/ditaly/
+  const rest = window.location.pathname.slice(3) || "/";
 
   return (
     <nav aria-label={t.nav.language} className="lang-switch" style={{ fontSize: size }}>
       {LANGS.map((lang) => (
         <a
           key={lang}
-          href={`/${lang}/`}
+          href={`/${lang}${rest}`}
           hrefLang={lang}
           lang={lang}
           aria-current={lang === current ? "page" : undefined}

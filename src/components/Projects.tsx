@@ -1,25 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useScrollReveal } from "@/hooks/useAnimations";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { useT } from "@/i18n";
-import losRombosDesktop from "@/assets/cases/los-rombos-desktop.webp";
-import losRombosMobile from "@/assets/cases/los-rombos-mobile.webp";
-import ditalyDesktop from "@/assets/cases/ditaly-desktop.webp";
-import ditalyMobile from "@/assets/cases/ditaly-mobile.webp";
-import rota94Desktop from "@/assets/cases/rota-94-desktop.webp";
-import rota94Mobile from "@/assets/cases/rota-94-mobile.webp";
-
-// Mesma ordem de t.projects.items. `slug` vai virar o endereço da página de cada case.
-const CASES = [
-  { slug: "los-rombos", status: "live", desktop: losRombosDesktop, mobile: losRombosMobile, accent: "#F07F13" },
-  { slug: "ditaly", status: "concept", desktop: ditalyDesktop, mobile: ditalyMobile, accent: "#F5A524" },
-  { slug: "rota-94", status: "concept", desktop: rota94Desktop, mobile: rota94Mobile, accent: "#FFB003" },
-] as const;
+import { useLang, useT } from "@/i18n";
+import { CASES } from "@/cases";
 
 const AUTOPLAY_MS = 7000;
 
 export function Projects() {
   const t = useT().projects;
+  const lang = useLang();
   const n = CASES.length;
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -58,11 +47,6 @@ export function Projects() {
     if (!s) return;
     const dx = e.clientX - s.x;
     if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(e.clientY - s.y)) go(active + (dx < 0 ? 1 : -1));
-  };
-
-  const toContact = (e: React.MouseEvent) => {
-    e.preventDefault();
-    document.querySelector("#contato")?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -124,7 +108,7 @@ export function Projects() {
                         <li key={chip}>{chip}</li>
                       ))}
                     </ul>
-                    <a href="#contato" className="case-more" tabIndex={front ? 0 : -1} onClick={toContact}>
+                    <a href={`/${lang}/cases/${c.slug}/`} className="case-more" tabIndex={front ? 0 : -1}>
                       {t.more} <ArrowRight size={14} />
                     </a>
                   </div>

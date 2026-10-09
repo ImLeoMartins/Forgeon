@@ -67,8 +67,9 @@ async function countryFromCloudflare(): Promise<string | null> {
  * Link do WhatsApp com o número certo para o visitante e a mensagem já escrita
  * no idioma da página. Ordem: país do idioma do navegador (preferência do
  * usuário) > país do Cloudflare > fuso horário > idioma da página.
+ * `message` troca a mensagem padrão (por exemplo, citando o case que a pessoa viu).
  */
-export function useWhatsApp(): string {
+export function useWhatsApp(message?: string): string {
   const lang = useLang();
   const t = useT();
   const browserCountry = countryFromBrowser();
@@ -89,5 +90,5 @@ export function useWhatsApp(): string {
     };
   }, [browserCountry]);
 
-  return `https://wa.me/${NUMBERS[region]}?text=${encodeURIComponent(t.whatsapp.message)}`;
+  return `https://wa.me/${NUMBERS[region]}?text=${encodeURIComponent(message ?? t.whatsapp.message)}`;
 }

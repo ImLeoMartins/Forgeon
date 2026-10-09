@@ -15,6 +15,18 @@ export function langFromPath(pathname: string): Lang | null {
   return (LANGS as readonly string[]).includes(seg) ? (seg as Lang) : null;
 }
 
+/** Slug do case em /xx/cases/<slug>/; null fora das páginas de case. */
+export function caseSlugFromPath(pathname: string): string | null {
+  return pathname.match(/^\/(?:pt|es|en)\/cases\/([a-z0-9-]+)\/?$/)?.[1] ?? null;
+}
+
+/** Rola até a seção se ela está na página; senão, abre a home nessa seção. */
+export function goToSection(lang: Lang, hash: string) {
+  const el = document.querySelector(hash);
+  if (el) el.scrollIntoView({ behavior: "smooth" });
+  else window.location.href = `/${lang}/${hash}`;
+}
+
 export function rememberLang(lang: Lang) {
   try {
     localStorage.setItem(PREF_KEY, lang);

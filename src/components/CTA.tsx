@@ -4,9 +4,12 @@ import { MessageCircle, Mail } from "lucide-react";
 import { useT } from "@/i18n";
 import { useWhatsApp } from "@/lib/whatsapp";
 
-export function CTA() {
+type CTAProps = { title?: string; lead?: string; whatsappMessage?: string };
+
+/** Seção de contato. Nas páginas de case, recebe título, texto e mensagem do WhatsApp próprios. */
+export function CTA({ title, lead, whatsappMessage }: CTAProps = {}) {
   const t = useT().cta;
-  const whatsapp = useWhatsApp();
+  const whatsapp = useWhatsApp(whatsappMessage);
   const ref = useRef<HTMLDivElement>(null);
   const observe = useScrollReveal("-60px");
 
@@ -97,7 +100,7 @@ export function CTA() {
               position: "relative",
             }}
           >
-            {t.title}
+            {title ?? t.title}
           </h2>
 
           <p
@@ -108,7 +111,7 @@ export function CTA() {
               position: "relative",
             }}
           >
-            {t.lead}
+            {lead ?? t.lead}
           </p>
 
           <div

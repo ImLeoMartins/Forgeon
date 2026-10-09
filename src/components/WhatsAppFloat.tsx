@@ -1,10 +1,14 @@
-import { useT } from "@/i18n";
+import { caseSlugFromPath, useT } from "@/i18n";
 import { useWhatsApp } from "@/lib/whatsapp";
 
 /** Botão fixo no canto da tela; o número muda conforme o país do visitante. */
 export function WhatsAppFloat() {
-  const href = useWhatsApp();
-  const label = useT().whatsapp.float;
+  const t = useT();
+  // Na página de um case, a mensagem já cita o projeto que a pessoa viu.
+  const slug = caseSlugFromPath(window.location.pathname);
+  const item = t.projects.items.find((i) => i.slug === slug);
+  const href = useWhatsApp(item ? t.casePage.whatsappMessage.replace("{name}", item.name) : undefined);
+  const label = t.whatsapp.float;
 
   return (
     <a href={href} target="_blank" rel="noopener noreferrer" className="wa-float" aria-label={label} title={label}>
