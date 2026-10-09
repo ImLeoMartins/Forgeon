@@ -26,7 +26,10 @@ export const SpinningBorderButton = React.forwardRef<
     >
       {/* Spinning Border Beam (Visible on Hover) */}
       <span
-        className="absolute inset-[-100%] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        className={
+          "absolute inset-[-100%] opacity-0 transition-opacity duration-300 group-hover:opacity-100" +
+          (isPrimary ? " [@media(hover:none)]:opacity-100" : " group-active:opacity-100")
+        }
         style={{
           animation: "spin 3s linear infinite",
           background: isPrimary

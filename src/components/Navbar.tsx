@@ -14,6 +14,19 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
+  // Menu mobile: trava o scroll da página e fecha com Esc
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setMobileOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [mobileOpen]);
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 40);
@@ -103,7 +116,6 @@ export function Navbar() {
         {/* Desktop nav links */}
         <ul
           style={{
-            display: "flex",
             gap: 20,
             listStyle: "none",
             padding: 0,
@@ -169,13 +181,15 @@ export function Navbar() {
         <button
           className="md:hidden"
           onClick={() => setMobileOpen((v) => !v)}
-          aria-label="Menu"
+          aria-label={mobileOpen ? "Fechar menu" : "Abrir menu"}
+          aria-expanded={mobileOpen}
           style={{
             background: "none",
             border: "none",
             color: "#F4F4F7",
             cursor: "pointer",
-            padding: "8px 12px",
+            minWidth: 44,
+            minHeight: 44,
           }}
         >
           {mobileOpen ? <X size={22} /> : <Menu size={22} />}
@@ -199,6 +213,8 @@ export function Navbar() {
             alignItems: "center",
             justifyContent: "center",
             gap: 32,
+            padding: "env(safe-area-inset-top, 0px) 24px env(safe-area-inset-bottom, 0px)",
+            overflowY: "auto",
           }}
         >
           {navLinks.map(({ href, label }) => (

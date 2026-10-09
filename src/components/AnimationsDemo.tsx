@@ -5,16 +5,21 @@ import { Sparkles, Zap, Stars, Target } from "lucide-react";
 
 export function AnimationsDemo() {
   const demoRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
   const observe = useScrollReveal("-60px");
 
   // Animação de parallax para o card principal
-  const parallaxCardRef = useParallax(0.2, "up");
+  const parallaxCardRef = useParallax<HTMLDivElement>(0.2, "up");
 
   // Animação de 3D tilt para o card interativo
   const tiltCardRef = use3DTilt(10);
 
   useEffect(() => {
     observe(demoRef.current);
+    // Os cards internos (.fade-up) nunca eram observados e ficavam invisíveis.
+    sectionRef.current
+      ?.querySelectorAll(".fade-up")
+      .forEach((el) => observe(el));
   }, [observe]);
 
   const animationTypes = [
@@ -46,9 +51,10 @@ export function AnimationsDemo() {
 
   return (
     <section
+      ref={sectionRef}
       id="animacoes"
       style={{
-        padding: "96px 0",
+        padding: "var(--section-y) 0",
         background: "linear-gradient(180deg, transparent 0%, rgba(8,9,13,0.8) 50%, transparent 100%)",
       }}
     >
@@ -189,7 +195,8 @@ export function AnimationsDemo() {
               color: "#85A9FA",
               marginBottom: 12,
             }}>
-              Passe o mouse para o efeito 3D
+              <span className="hover-only">Passe o mouse para o efeito 3D</span>
+              <span className="touch-only">Deslize o dedo para o efeito 3D</span>
             </h3>
             <p style={{
               color: "#A3A6B5",
@@ -197,7 +204,9 @@ export function AnimationsDemo() {
               maxWidth: "48ch",
               margin: "0 auto",
             }}>
-              Esta seção inclina suavemente seguindo o movimento do seu cursor
+              Esta seção inclina suavemente seguindo o movimento do seu{" "}
+              <span className="hover-only">cursor</span>
+              <span className="touch-only">dedo</span>
             </p>
           </div>
 

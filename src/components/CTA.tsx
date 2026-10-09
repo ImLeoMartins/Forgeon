@@ -11,7 +11,7 @@ export function CTA() {
   }, [observe]);
 
   return (
-    <section id="contato" style={{ paddingTop: 0, paddingBottom: 96 }}>
+    <section id="contato" style={{ paddingTop: 0, paddingBottom: "var(--section-y)" }}>
       <div
         style={{
           maxWidth: 1240,
@@ -100,7 +100,7 @@ export function CTA() {
             style={{
               maxWidth: "46ch",
               color: "rgba(244,244,247,0.85)",
-              fontSize: 18,
+              fontSize: "clamp(16px, 1.2vw + 12px, 18px)",
               position: "relative",
             }}
           >
@@ -108,17 +108,19 @@ export function CTA() {
           </p>
 
           <div
+            className="cta-actions"
             style={{
               display: "flex",
               gap: 12,
               flexWrap: "wrap",
               alignItems: "center",
               position: "relative",
+              width: "100%",
             }}
           >
             {/* WhatsApp button */}
             <a
-              href="https://wa.me/5500000000000"
+              href="https://wa.me/5515996825326"
               target="_blank"
               rel="noopener noreferrer"
               style={{
@@ -153,7 +155,7 @@ export function CTA() {
 
             {/* Email button */}
             <a
-              href="mailto:oi@forgeon.com.br"
+              href="mailto:contato@forgeon.dev"
               style={{
                 display: "inline-flex",
                 alignItems: "center",

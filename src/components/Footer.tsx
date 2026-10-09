@@ -13,12 +13,13 @@ export function Footer() {
     <footer
       style={{
         borderTop: "1px solid #292B38",
-        padding: "48px 0 64px",
+        padding: "48px 0 calc(48px + env(safe-area-inset-bottom, 0px))",
         color: "#A3A6B5",
         fontSize: 15,
       }}
     >
       <div
+        className="footer-inner"
         style={{
           maxWidth: 1240,
           margin: "0 auto",
@@ -86,7 +87,7 @@ export function Footer() {
             © {new Date().getFullYear()} Forgeon. Todos os direitos reservados.
           </span>
           <a
-            href="https://wa.me/5500000000000"
+            href="https://wa.me/5515996825326"
             target="_blank"
             rel="noopener noreferrer"
             style={{

@@ -59,7 +59,8 @@ function ServiceCard({ service, delay }: { service: Service; delay: number }) {
       ref={cardRef}
       className="fade-up"
       style={{ "--delay": `${delay}ms` } as React.CSSProperties}
-      onMouseMove={handleMouseMove}
+      onPointerMove={handleMouseMove}
+      onPointerDown={handleMouseMove}
     >
       <article
         style={{
@@ -67,8 +68,8 @@ function ServiceCard({ service, delay }: { service: Service; delay: number }) {
           display: "flex",
           flexDirection: "column",
           gap: 12,
-          minHeight: 280,
-          padding: 32,
+          minHeight: 240,
+          padding: "clamp(22px, 5vw, 32px)",
           background: "rgba(16,17,24,0.8)",
           border: "1px solid #292B38",
           borderRadius: 24,
@@ -169,14 +170,17 @@ function ServiceCard({ service, delay }: { service: Service; delay: number }) {
       </article>
 
       <style>{`
-        .service-card:hover {
-          transform: translateY(-8px) !important;
-          border-color: ${service.accent}66 !important;
-          box-shadow: 0 0 0 1px ${service.accent}40, 0 20px 60px -12px ${service.accent}40 !important;
+        @media (hover: hover) {
+          .service-card:hover {
+            transform: translateY(-8px) !important;
+            border-color: ${service.accent}66 !important;
+            box-shadow: 0 0 0 1px ${service.accent}40, 0 20px 60px -12px ${service.accent}40 !important;
+          }
+          .service-card:hover .card-spotlight { opacity: 1 !important; }
         }
-        .service-card:hover .card-spotlight {
-          opacity: 1 !important;
-        }
+        /* Toque: o brilho aparece enquanto o dedo está no card */
+        .service-card:active { border-color: ${service.accent}66 !important; }
+        .service-card:active .card-spotlight { opacity: 1 !important; }
       `}</style>
     </div>
   );
@@ -193,7 +197,7 @@ export function Services() {
   }, [observe]);
 
   return (
-    <section id="servicos" style={{ padding: "96px 0" }}>
+    <section id="servicos" style={{ padding: "var(--section-y) 0" }}>
       <div
         style={{
           maxWidth: 1240,
@@ -223,7 +227,7 @@ export function Services() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(260px, 100%), 1fr))",
             gap: 16,
             marginTop: 48,
           }}

@@ -6,6 +6,8 @@ import { useEffect, useRef, useCallback } from "react";
  */
 export function useScrollReveal(rootMargin = "-80px") {
   const observerRef = useRef<IntersectionObserver | null>(null);
+  // alvo observado -> elemento que recebe a classe "in"
+  const targetsRef = useRef(new WeakMap<Element, Element>());
 
   const observe = useCallback(
     (el: Element | null) => {
@@ -15,7 +17,8 @@ export function useScrollReveal(rootMargin = "-80px") {
           (entries) => {
             entries.forEach((entry) => {
               if (entry.isIntersecting) {
-                entry.target.classList.add("in");
+                const revealed = targetsRef.current.get(entry.target) ?? entry.target;
+                revealed.classList.add("in");
                 observerRef.current?.unobserve(entry.target);
               }
             });
@@ -23,7 +26,11 @@ export function useScrollReveal(rootMargin = "-80px") {
           { rootMargin }
         );
       }
-      observerRef.current.observe(el);
+      // .rv começa recortado por clip-path: o observer pode considerá-lo invisível
+      // (principalmente no celular) e nunca revelá-lo. Observamos o pai, que não é recortado.
+      const target = el.classList.contains("rv") ? (el.parentElement ?? el) : el;
+      targetsRef.current.set(target, el);
+      observerRef.current.observe(target);
     },
     [rootMargin]
   );
@@ -60,7 +67,7 @@ export function useScrollProgress() {
  * Hook for card mouse spotlight effect.
  */
 export function useCardSpotlight() {
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseMove = (e: React.PointerEvent<HTMLDivElement>) => {
     const card = e.currentTarget;
     const rect = card.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
@@ -81,7 +88,7 @@ export function use3DTilt(strength = 12) {
     const el = ref.current;
     if (!el) return;
 
-    const handleMouseMove = (e: MouseEvent) => {
+    const handleMouseMove = (e: PointerEvent) => {
       const rect = el.getBoundingClientRect();
       const x = (e.clientX - rect.left) / rect.width - 0.5;
       const y = (e.clientY - rect.top) / rect.height - 0.5;
@@ -97,14 +104,22 @@ export function use3DTilt(strength = 12) {
       el.style.transition = "transform 100ms ease";
     };
 
-    el.addEventListener("mousemove", handleMouseMove);
-    el.addEventListener("mouseleave", handleMouseLeave);
-    el.addEventListener("mouseenter", handleMouseEnter);
+    // Pointer events cobrem mouse, toque e caneta. pan-y mantém o scroll vertical no celular.
+    el.style.touchAction = "pan-y";
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    el.addEventListener("pointermove", handleMouseMove);
+    el.addEventListener("pointerleave", handleMouseLeave);
+    el.addEventListener("pointercancel", handleMouseLeave);
+    el.addEventListener("pointerup", handleMouseLeave);
+    el.addEventListener("pointerenter", handleMouseEnter);
 
     return () => {
-      el.removeEventListener("mousemove", handleMouseMove);
-      el.removeEventListener("mouseleave", handleMouseLeave);
-      el.removeEventListener("mouseenter", handleMouseEnter);
+      el.removeEventListener("pointermove", handleMouseMove);
+      el.removeEventListener("pointerleave", handleMouseLeave);
+      el.removeEventListener("pointercancel", handleMouseLeave);
+      el.removeEventListener("pointerup", handleMouseLeave);
+      el.removeEventListener("pointerenter", handleMouseEnter);
     };
   }, [strength]);
 

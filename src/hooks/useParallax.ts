@@ -5,15 +5,16 @@ import { useEffect, useRef } from "react";
  * @param factor - Intensidade do efeito parallax (0-1)
  * @param direction - Direção do movimento ('up', 'down', 'left', 'right')
  */
-export function useParallax(
+export function useParallax<T extends HTMLElement = HTMLImageElement>(
   factor = 0.2,
   direction: "up" | "down" | "left" | "right" = "up"
 ) {
-  const ref = useRef<HTMLImageElement>(null);
+  const ref = useRef<T>(null);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const handleScroll = () => {
       const rect = el.getBoundingClientRect();

@@ -5,19 +5,18 @@ import { ArrowRight } from "lucide-react";
 
 function CaseStudy3D() {
   const tiltRef = use3DTilt(8);
-  const phoneRef = useParallax(0.15, "up");
+  const phoneRef = useParallax<HTMLDivElement>(0.15, "up");
 
   return (
     <div
       ref={tiltRef}
+      className="case-grid"
       style={{
         background: "linear-gradient(135deg, #1B1252, #151E6E 55%, #0D2257)",
         border: "1px solid #292B38",
         borderRadius: 24,
         overflow: "hidden",
         marginTop: 48,
-        display: "grid",
-        gridTemplateColumns: "1fr 1.2fr",
         transition: "transform 500ms cubic-bezier(.16,1,.3,1)",
         willChange: "transform",
         boxShadow: "0 0 0 1px rgba(69,77,252,.2), 0 40px 80px -20px rgba(8,9,13,.8)",
@@ -113,15 +112,15 @@ function CaseStudy3D() {
 
       {/* Screenshot placeholder with glass effect */}
       <div
+        className="case-visual"
         style={{
           background: "#101118",
           display: "grid",
           placeItems: "center",
-          padding: 32,
-          borderLeft: "1px solid #292B38",
+          padding: "clamp(20px, 5vw, 32px)",
           position: "relative",
           overflow: "hidden",
-          minHeight: 340,
+          minHeight: 300,
         }}
       >
         {/* Decorative background glow */}
@@ -218,11 +217,6 @@ function CaseStudy3D() {
         </div>
       </div>
 
-      <style>{`
-        @media (max-width: 820px) {
-          .case-grid { grid-template-columns: 1fr !important; }
-        }
-      `}</style>
     </div>
   );
 }
@@ -236,7 +230,7 @@ export function Projects() {
   }, [observe]);
 
   return (
-    <section id="projetos" style={{ paddingTop: 0, paddingBottom: 96 }}>
+    <section id="projetos" style={{ paddingTop: 0, paddingBottom: "var(--section-y)" }}>
       <div
         style={{
           maxWidth: 1240,

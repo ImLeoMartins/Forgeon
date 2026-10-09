@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 import { useScrollReveal } from "@/hooks/useAnimations";
 
 const steps = [
@@ -27,7 +27,6 @@ const steps = [
 function StepItem({ step, index }: { step: typeof steps[0]; index: number }) {
   const ref = useRef<HTMLLIElement>(null);
   const observe = useScrollReveal("-40px");
-  const [hovered, setHovered] = useState(false);
 
   useEffect(() => {
     observe(ref.current);
@@ -36,35 +35,11 @@ function StepItem({ step, index }: { step: typeof steps[0]; index: number }) {
   return (
     <li
       ref={ref}
-      className="fade-up"
-      style={
-        {
-          "--delay": `${index * 120}ms`,
-          counterIncrement: "s",
-          borderTop: `2px solid ${hovered ? "#454DFC" : "#292B38"}`,
-          paddingTop: 16,
-          transition: "border-color 280ms ease",
-          cursor: "default",
-          position: "relative",
-        } as React.CSSProperties
-      }
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      className="step fade-up"
+      style={{ "--delay": `${index * 120}ms`, cursor: "default" } as React.CSSProperties}
     >
-      {/* Progress line that fills on hover */}
-      <div
-        aria-hidden
-        style={{
-          position: "absolute",
-          top: -2,
-          left: 0,
-          height: 2,
-          width: hovered ? "100%" : "0%",
-          background: "linear-gradient(90deg, #4128FB, #85A9FA)",
-          transition: "width 500ms cubic-bezier(.16,1,.3,1)",
-          borderRadius: 1,
-        }}
-      />
+      {/* Linha de progresso: hover no desktop, preenche ao aparecer no celular (ver index.css) */}
+      <div aria-hidden className="step-line" />
 
       <span
         style={{
@@ -78,16 +53,7 @@ function StepItem({ step, index }: { step: typeof steps[0]; index: number }) {
         {step.num}
       </span>
 
-      <h3
-        style={{
-          fontSize: 20,
-          fontWeight: 600,
-          margin: "8px 0",
-          letterSpacing: "-0.01em",
-          color: hovered ? "#F4F4F7" : "#F4F4F7",
-          transition: "color 200ms ease",
-        }}
-      >
+      <h3 style={{ fontSize: 20, fontWeight: 600, margin: "8px 0", letterSpacing: "-0.01em", color: "#F4F4F7" }}>
         {step.title}
       </h3>
 
@@ -105,7 +71,7 @@ export function Process() {
   }, [observe]);
 
   return (
-    <section id="processo" style={{ paddingTop: 0, paddingBottom: 96 }}>
+    <section id="processo" style={{ paddingTop: 0, paddingBottom: "var(--section-y)" }}>
       <div
         style={{
           maxWidth: 1240,
@@ -125,7 +91,7 @@ export function Process() {
             padding: 0,
             marginTop: 48,
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(220px, 100%), 1fr))",
             gap: 20,
             counterReset: "s",
           }}
