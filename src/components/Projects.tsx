@@ -108,7 +108,7 @@ export function Projects() {
                         <li key={chip}>{chip}</li>
                       ))}
                     </ul>
-                    <a href={`/${lang}/cases/${c.slug}/`} className="case-more" tabIndex={front ? 0 : -1}>
+                    <a href={`/${lang}/cases/${c.slug}/`} className="case-more" tabIndex={front ? 0 : -1} data-umami-event="case-open" data-umami-event-case={c.slug}>
                       {t.more} <ArrowRight size={14} />
                     </a>
                   </div>

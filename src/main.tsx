@@ -4,6 +4,7 @@ import './index.css'
 import App from './App.tsx'
 import { LangProvider, caseSlugFromPath, langFromPath } from './i18n'
 import { messages } from './i18n/messages'
+import { loadAnalytics } from './lib/analytics'
 
 // O script em index.html já mandou quem chegou sem idioma para /pt/, /es/ ou /en/.
 const lang = langFromPath(window.location.pathname) ?? 'en'
@@ -15,6 +16,8 @@ const caseSlug = caseSlugFromPath(window.location.pathname)
 const item = caseSlug ? messages[lang].projects.items.find((i) => i.slug === caseSlug) : undefined
 if (caseSlug && !item) window.location.replace(`/${lang}/`)
 if (item) document.title = `${item.name} — ${item.headline.replace(/\.$/, '')} | Forgeon`
+
+loadAnalytics()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

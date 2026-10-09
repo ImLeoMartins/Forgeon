@@ -96,6 +96,14 @@ ${urls.join("\n")}
 </urlset>
 `,
 );
+// Endereço que não existe: o Cloudflare Pages serve este arquivo com status 404.
+writeFileSync(
+  "dist/404.html",
+  `<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="robots" content="noindex">
+<meta http-equiv="refresh" content="0; url=/"><title>Forgeon</title></head>
+<body><a href="/">forgeon.dev</a></body></html>
+`,
+);
 writeFileSync("dist/robots.txt", `User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`);
 
 console.log(`build-langs: ${LANGS.length} idiomas × ${paths.length} páginas + sitemap.xml + robots.txt`);

@@ -3,6 +3,7 @@ import { useScrollReveal } from "@/hooks/useAnimations";
 import { MessageCircle, Mail } from "lucide-react";
 import { useT } from "@/i18n";
 import { useWhatsApp } from "@/lib/whatsapp";
+import { whatsappEvent } from "@/lib/analytics";
 
 type CTAProps = { title?: string; lead?: string; whatsappMessage?: string };
 
@@ -128,6 +129,7 @@ export function CTA({ title, lead, whatsappMessage }: CTAProps = {}) {
             {/* WhatsApp button */}
             <a
               href={whatsapp}
+              {...whatsappEvent(whatsapp, "contact")}
               target="_blank"
               rel="noopener noreferrer"
               style={{

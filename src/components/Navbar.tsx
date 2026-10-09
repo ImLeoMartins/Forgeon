@@ -5,6 +5,7 @@ import { Menu, X } from "lucide-react";
 import { LangSwitcher } from "@/components/LangSwitcher";
 import { goToSection, useLang, useT } from "@/i18n";
 import { useWhatsApp } from "@/lib/whatsapp";
+import { whatsappEvent } from "@/lib/analytics";
 
 const sectionIds = ["servicos", "projetos", "processo"] as const;
 
@@ -188,6 +189,7 @@ export function Navbar() {
           <SpinningBorderButton
             variant="primary"
             onClick={openWhatsApp}
+            {...whatsappEvent(whatsapp, "navbar")}
             style={{ fontSize: 13 }}
           >
             {t.whatsapp}
@@ -256,6 +258,7 @@ export function Navbar() {
           <SpinningBorderButton
             variant="primary"
             onClick={openWhatsApp}
+            {...whatsappEvent(whatsapp, "navbar")}
           >
             {t.whatsapp}
           </SpinningBorderButton>

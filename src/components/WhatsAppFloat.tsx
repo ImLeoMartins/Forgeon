@@ -1,5 +1,6 @@
 import { caseSlugFromPath, useT } from "@/i18n";
 import { useWhatsApp } from "@/lib/whatsapp";
+import { whatsappEvent } from "@/lib/analytics";
 
 /** Botão fixo no canto da tela; o número muda conforme o país do visitante. */
 export function WhatsAppFloat() {
@@ -11,7 +12,7 @@ export function WhatsAppFloat() {
   const label = t.whatsapp.float;
 
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" className="wa-float" aria-label={label} title={label}>
+    <a href={href} target="_blank" rel="noopener noreferrer" className="wa-float" {...whatsappEvent(href, "float")} aria-label={label} title={label}>
       <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true" fill="currentColor">
         <path d="M16.04 3C9.06 3 3.38 8.68 3.38 15.66c0 2.23.58 4.41 1.69 6.33L3.28 28.5l6.68-1.75a12.6 12.6 0 0 0 6.08 1.55h.01c6.98 0 12.66-5.68 12.66-12.66 0-3.38-1.32-6.56-3.71-8.95A12.58 12.58 0 0 0 16.04 3Zm0 23.17h-.01a10.5 10.5 0 0 1-5.36-1.47l-.38-.23-3.97 1.04 1.06-3.87-.25-.4a10.48 10.48 0 0 1-1.61-5.58c0-5.8 4.72-10.52 10.53-10.52 2.81 0 5.45 1.1 7.44 3.08a10.45 10.45 0 0 1 3.08 7.45c0 5.8-4.72 10.5-10.53 10.5Zm5.77-7.87c-.32-.16-1.87-.92-2.16-1.03-.29-.1-.5-.16-.71.16-.21.32-.82 1.03-1 1.24-.18.21-.37.24-.69.08-.32-.16-1.33-.49-2.54-1.57-.94-.84-1.57-1.87-1.75-2.19-.18-.32-.02-.49.14-.65.14-.14.32-.37.48-.55.16-.18.21-.32.32-.53.1-.21.05-.4-.03-.55-.08-.16-.71-1.71-.97-2.34-.26-.62-.52-.53-.71-.54h-.61c-.21 0-.55.08-.84.4-.29.32-1.1 1.08-1.1 2.62 0 1.55 1.13 3.05 1.29 3.26.16.21 2.22 3.39 5.38 4.75.75.32 1.34.52 1.8.66.75.24 1.44.21 1.98.13.6-.09 1.87-.77 2.13-1.5.26-.74.26-1.37.18-1.5-.08-.13-.29-.21-.61-.37Z" />
       </svg>

@@ -2,6 +2,7 @@ import { NAV_SYMBOL_PATHS, WORDMARK_PATH } from "@/lib/svgAssets";
 import { MessageCircle } from "lucide-react";
 import { goToSection, useLang, useT } from "@/i18n";
 import { useWhatsApp } from "@/lib/whatsapp";
+import { whatsappEvent } from "@/lib/analytics";
 
 export function Footer() {
   const t = useT();
@@ -98,6 +99,7 @@ export function Footer() {
           </span>
           <a
             href={whatsapp}
+            {...whatsappEvent(whatsapp, "footer")}
             target="_blank"
             rel="noopener noreferrer"
             style={{
