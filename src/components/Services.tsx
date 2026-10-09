@@ -1,6 +1,7 @@
 import { useRef, useEffect } from "react";
 import { useScrollReveal, useCardSpotlight } from "@/hooks/useAnimations";
 import { Globe, Box, Zap, Bot } from "lucide-react";
+import { useT } from "@/i18n";
 
 interface Service {
   tag: string;
@@ -10,42 +11,15 @@ interface Service {
   accent: string;
 }
 
-const services: Service[] = [
-  {
-    tag: "Websites",
-    title: "Presença digital que trabalha pelo seu negócio.",
-    description:
-      "Sites institucionais e de venda, rápidos, no celular primeiro e prontos para converter visitas em conversas.",
-    icon: <Globe size={28} />,
-    accent: "#454DFC",
-  },
-  {
-    tag: "Produtos digitais",
-    title: "Transformamos ideias em produtos.",
-    description:
-      "Aplicativos, plataformas e painéis sob medida, do protótipo ao produto em uso.",
-    icon: <Box size={28} />,
-    accent: "#9070F7",
-  },
-  {
-    tag: "Automação",
-    title: "Menos operação manual.",
-    description:
-      "Conectamos pedidos, mensagens, planilhas e sistemas para que tarefas repetidas rodem sozinhas.",
-    icon: <Zap size={28} />,
-    accent: "#85A9FA",
-  },
-  {
-    tag: "Agentes de IA",
-    title: "Tecnologia que trabalha enquanto você trabalha.",
-    description:
-      "Assistentes que atendem, qualificam e resolvem tarefas dentro da sua rotina, com limites que você define.",
-    icon: <Bot size={28} />,
-    accent: "#6F41FA",
-  },
+// Mesma ordem de t.services.items
+const visuals = [
+  { icon: <Globe size={28} />, accent: "#454DFC" },
+  { icon: <Box size={28} />, accent: "#9070F7" },
+  { icon: <Zap size={28} />, accent: "#85A9FA" },
+  { icon: <Bot size={28} />, accent: "#6F41FA" },
 ];
 
-function ServiceCard({ service, delay }: { service: Service; delay: number }) {
+function ServiceCard({ service, delay, more }: { service: Service; delay: number; more: string }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const observe = useScrollReveal("-60px");
   const handleMouseMove = useCardSpotlight();
@@ -161,7 +135,7 @@ function ServiceCard({ service, delay }: { service: Service; delay: number }) {
             transition: "gap 200ms ease",
           }}
         >
-          Ver como funciona
+          {more}
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M5 12h14" />
             <path d="m12 5 7 7-7 7" />
@@ -187,6 +161,7 @@ function ServiceCard({ service, delay }: { service: Service; delay: number }) {
 }
 
 export function Services() {
+  const t = useT().services;
   const titleRef = useRef<HTMLHeadingElement>(null);
   const leadRef = useRef<HTMLParagraphElement>(null);
   const observe = useScrollReveal("-60px");
@@ -207,7 +182,7 @@ export function Services() {
       >
         <div ref={titleRef} className="rv">
           <h2 style={{ fontSize: "clamp(30px, 4.4vw, 48px)", fontWeight: 700, maxWidth: "18ch" }}>
-            Quatro frentes, um mesmo padrão de entrega.
+            {t.title}
           </h2>
         </div>
         <p
@@ -221,7 +196,7 @@ export function Services() {
             "--delay": "150ms",
           } as React.CSSProperties}
         >
-          Cada projeto começa pelo problema do seu negócio, não pela ferramenta.
+          {t.lead}
         </p>
 
         <div
@@ -232,8 +207,8 @@ export function Services() {
             marginTop: 48,
           }}
         >
-          {services.map((service, i) => (
-            <ServiceCard key={service.tag} service={service} delay={i * 100} />
+          {t.items.map((item, i) => (
+            <ServiceCard key={item.tag} service={{ ...item, ...visuals[i] }} delay={i * 100} more={t.more} />
           ))}
         </div>
       </div>

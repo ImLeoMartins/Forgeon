@@ -2,8 +2,10 @@ import { useRef, useEffect } from "react";
 import { useScrollReveal, use3DTilt } from "@/hooks/useAnimations";
 import { useParallax } from "@/hooks/useParallax";
 import { ArrowRight } from "lucide-react";
+import { useT } from "@/i18n";
 
 function CaseStudy3D() {
+  const t = useT().projects;
   const tiltRef = use3DTilt(8);
   const phoneRef = useParallax<HTMLDivElement>(0.15, "up");
 
@@ -33,7 +35,7 @@ function CaseStudy3D() {
         }}
       >
         <span style={{ color: "#6C6F82", fontSize: 14, fontWeight: 600 }}>
-          Los Rombos · Valladolid, Espanha
+          {t.place}
         </span>
 
         <h3
@@ -44,30 +46,27 @@ function CaseStudy3D() {
             lineHeight: 1.1,
           }}
         >
-          Site, pedidos e WhatsApp em uma só experiência móvel.
+          {t.headline}
         </h3>
 
         <dl style={{ display: "grid", gap: 12, marginTop: 8 }}>
           <div>
-            <dt style={{ fontWeight: 600, fontSize: 15, color: "#F4F4F7" }}>O desafio</dt>
+            <dt style={{ fontWeight: 600, fontSize: 15, color: "#F4F4F7" }}>{t.challengeLabel}</dt>
             <dd style={{ color: "#A3A6B5", fontSize: 15, marginTop: 2 }}>
-              Clientes pediam por mensagem solta, e a equipe perdia tempo anotando.
+              {t.challenge}
             </dd>
           </div>
           <div>
-            <dt style={{ fontWeight: 600, fontSize: 15, color: "#F4F4F7" }}>A solução</dt>
+            <dt style={{ fontWeight: 600, fontSize: 15, color: "#F4F4F7" }}>{t.solutionLabel}</dt>
             <dd style={{ color: "#A3A6B5", fontSize: 15, marginTop: 2 }}>
-              Cardápio online, pedido direto e confirmação por WhatsApp.
+              {t.solution}
             </dd>
           </div>
         </dl>
 
         {/* Metrics */}
         <div style={{ display: "flex", gap: 20, marginTop: 8, flexWrap: "wrap" }}>
-          {[
-            { value: "3×", label: "mais pedidos" },
-            { value: "-70%", label: "erros de pedido" },
-          ].map(({ value, label }) => (
+          {t.metrics.map(({ value, label }) => (
             <div
               key={label}
               style={{
@@ -106,7 +105,7 @@ function CaseStudy3D() {
             marginTop: 4,
           }}
         >
-          Ver o projeto completo <ArrowRight size={14} />
+          {t.more} <ArrowRight size={14} />
         </a>
       </div>
 
@@ -212,7 +211,7 @@ function CaseStudy3D() {
             fontWeight: 600,
             textAlign: "center",
           }}>
-            📱 Pedir via WhatsApp
+            {t.mockOrder}
           </div>
         </div>
       </div>
@@ -222,6 +221,7 @@ function CaseStudy3D() {
 }
 
 export function Projects() {
+  const t = useT().projects;
   const titleRef = useRef<HTMLHeadingElement>(null);
   const observe = useScrollReveal("-60px");
 
@@ -240,7 +240,7 @@ export function Projects() {
       >
         <div ref={titleRef} className="rv">
           <h2 style={{ fontSize: "clamp(30px, 4.4vw, 48px)", fontWeight: 700, maxWidth: "18ch" }}>
-            Resultado real em um restaurante real.
+            {t.title}
           </h2>
         </div>
 

@@ -1,18 +1,40 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>Forgeon — Produtos digitais e tecnologia</title>
-    <meta name="description" content="Criamos sites, produtos digitais, automações e agentes de IA para empresas que querem vender mais e operar com menos trabalho manual." />
+    <!-- SEO:START (trocado por idioma em scripts/build-langs.ts) -->
+    <title>Forgeon — Websites, automation and AI agents</title>
+    <meta name="description" content="We build websites, digital products, automations and AI agents for businesses that want to sell more and spend less time on manual work." />
+    <!-- SEO:END -->
 
-    <!-- Google Fonts -->
+    <script>
+      // Quem chega em "/" vai para o idioma escolhido antes ou, se não houver,
+      // para o idioma preferido do navegador. Fora pt e es, vale o inglês.
+      (function () {
+        var p = location.pathname;
+        if (p !== "/" && p !== "/index.html") return;
+        var lang;
+        try { lang = localStorage.getItem("forgeon-lang"); } catch (e) {}
+        if (!/^(pt|es|en)$/.test(lang || "")) {
+          lang = null;
+          var prefs = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ""];
+          for (var i = 0; i < prefs.length && !lang; i++) {
+            var code = String(prefs[i]).toLowerCase().split("-")[0];
+            if (code === "pt") lang = "pt";
+            else if (code === "es" || code === "ca" || code === "gl" || code === "eu") lang = "es";
+            else if (code === "en") lang = "en";
+          }
+        }
+        location.replace("/" + (lang || "en") + "/" + location.search + location.hash);
+      })();
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/src/assets/ForgeonSimbolo.svg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
   <body>
     <div id="root"></div>

@@ -1,8 +1,10 @@
 import { useRef, useEffect } from "react";
 import { useScrollReveal } from "@/hooks/useAnimations";
 import { MessageCircle, Mail } from "lucide-react";
+import { useT } from "@/i18n";
 
 export function CTA() {
+  const t = useT().cta;
   const ref = useRef<HTMLDivElement>(null);
   const observe = useScrollReveal("-60px");
 
@@ -79,7 +81,7 @@ export function CTA() {
               boxShadow: "0 0 8px rgba(255,255,255,0.8)",
               animation: "pulse-dot 2s ease-in-out infinite",
             }} />
-            Respondemos no mesmo dia
+            {t.badge}
           </span>
 
           <h2
@@ -93,7 +95,7 @@ export function CTA() {
               position: "relative",
             }}
           >
-            Conte o que você precisa.
+            {t.title}
           </h2>
 
           <p
@@ -104,7 +106,7 @@ export function CTA() {
               position: "relative",
             }}
           >
-            Prefere ver antes de decidir? Montamos um exemplo para o seu negócio, sem compromisso.
+            {t.lead}
           </p>
 
           <div
@@ -150,7 +152,7 @@ export function CTA() {
               }}
             >
               <MessageCircle size={18} color="#25D366" />
-              Falar no WhatsApp
+              {t.whatsapp}
             </a>
 
             {/* Email button */}
@@ -184,7 +186,7 @@ export function CTA() {
               }}
             >
               <Mail size={18} />
-              Enviar e-mail
+              {t.email}
             </a>
           </div>
 

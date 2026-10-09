@@ -1,14 +1,15 @@
 import { NAV_SYMBOL_PATHS, WORDMARK_PATH } from "@/lib/svgAssets";
 import { MessageCircle } from "lucide-react";
-
-const footerLinks = [
-  { href: "#servicos", label: "Serviços" },
-  { href: "#projetos", label: "Projetos" },
-  { href: "#processo", label: "Como trabalhamos" },
-  { href: "#contato", label: "Contato" },
-];
+import { useT } from "@/i18n";
 
 export function Footer() {
+  const t = useT();
+  const footerLinks = [
+    { href: "#servicos", label: t.nav.services },
+    { href: "#projetos", label: t.nav.projects },
+    { href: "#processo", label: t.nav.process },
+    { href: "#contato", label: t.nav.contact },
+  ];
   return (
     <footer
       style={{
@@ -35,7 +36,7 @@ export function Footer() {
         <a
           href="#top"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          aria-label="Forgeon, início"
+          aria-label={t.nav.home}
           style={{ display: "flex", alignItems: "center", gap: 10 }}
         >
           <svg
@@ -59,7 +60,7 @@ export function Footer() {
         </a>
 
         {/* Links */}
-        <nav aria-label="Rodapé" style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
+        <nav aria-label={t.nav.footer} style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
           {footerLinks.map(({ href, label }) => (
             <a
               key={href}
@@ -84,7 +85,7 @@ export function Footer() {
         {/* Copyright & WhatsApp */}
         <div style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
           <span style={{ color: "#6C6F82", fontSize: 13 }}>
-            © {new Date().getFullYear()} Forgeon. Todos os direitos reservados.
+            © {new Date().getFullYear()} Forgeon. {t.footer.rights}
           </span>
           <a
             href="https://wa.me/5515996825326"

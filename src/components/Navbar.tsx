@@ -2,17 +2,21 @@ import { useState, useEffect } from "react";
 import SpinningBorderButton from "@/components/ui/spinning-border-button";
 import { NAV_SYMBOL_PATHS, WORDMARK_PATH } from "@/lib/svgAssets";
 import { Menu, X } from "lucide-react";
+import { LangSwitcher } from "@/components/LangSwitcher";
+import { useT } from "@/i18n";
 
-const navLinks = [
-  { href: "#servicos", label: "Serviços" },
-  { href: "#projetos", label: "Projetos" },
-  { href: "#processo", label: "Como trabalhamos" },
-];
+const sectionIds = ["servicos", "projetos", "processo"] as const;
 
 export function Navbar() {
   const [activeSection, setActiveSection] = useState("");
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const t = useT().nav;
+  const navLinks = [
+    { href: "#servicos", label: t.services },
+    { href: "#projetos", label: t.projects },
+    { href: "#processo", label: t.process },
+  ];
 
   // Menu mobile: trava o scroll da página e fecha com Esc
   useEffect(() => {
@@ -32,7 +36,7 @@ export function Navbar() {
       setScrolled(window.scrollY > 40);
 
       // Active section detection
-      const sections = navLinks.map((l) => l.href.slice(1));
+      const sections = sectionIds;
       for (let i = sections.length - 1; i >= 0; i--) {
         const el = document.getElementById(sections[i]);
         if (el && window.scrollY >= el.offsetTop - 120) {
@@ -54,7 +58,7 @@ export function Navbar() {
   return (
     <>
       <nav
-        aria-label="Principal"
+        aria-label={t.main}
         style={{
           position: "fixed",
           top: "calc(16px + env(safe-area-inset-top, 0px))",
@@ -83,7 +87,7 @@ export function Navbar() {
         {/* Logo */}
         <a
           href="#top"
-          aria-label="Forgeon, início"
+          aria-label={t.home}
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           style={{
             display: "flex",
@@ -121,7 +125,7 @@ export function Navbar() {
             padding: 0,
             margin: 0,
           }}
-          className="hidden md:flex"
+          className="hidden lg:flex"
         >
           {navLinks.map(({ href, label }) => {
             const isActive = activeSection === href.slice(1);
@@ -166,22 +170,23 @@ export function Navbar() {
           })}
         </ul>
 
-        {/* CTA Button */}
-        <div className="hidden md:flex">
+        {/* Idioma + CTA */}
+        <div className="hidden lg:flex" style={{ alignItems: "center", gap: 14 }}>
+          <LangSwitcher />
           <SpinningBorderButton
             variant="primary"
             onClick={() => handleNavClick("#contato")}
             style={{ fontSize: 13 }}
           >
-            Falar no WhatsApp
+            {t.whatsapp}
           </SpinningBorderButton>
         </div>
 
         {/* Mobile menu toggle */}
         <button
-          className="md:hidden"
+          className="lg:hidden"
           onClick={() => setMobileOpen((v) => !v)}
-          aria-label={mobileOpen ? "Fechar menu" : "Abrir menu"}
+          aria-label={mobileOpen ? t.closeMenu : t.openMenu}
           aria-expanded={mobileOpen}
           style={{
             background: "none",
@@ -240,8 +245,9 @@ export function Navbar() {
             variant="primary"
             onClick={() => handleNavClick("#contato")}
           >
-            Falar no WhatsApp
+            {t.whatsapp}
           </SpinningBorderButton>
+          <LangSwitcher size={16} />
         </div>
       )}
     </>

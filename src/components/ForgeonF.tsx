@@ -35,7 +35,7 @@ export function ForgeonF() {
       <div
         className="f-mark"
         role="img"
-        aria-label="Símbolo da Forgeon"
+        aria-label="Forgeon"
         tabIndex={0}
         onPointerEnter={(e) => {
           if (e.pointerType === "mouse") replay();

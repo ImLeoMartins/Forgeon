@@ -1,30 +1,10 @@
 import { useRef, useEffect } from "react";
 import { useScrollReveal } from "@/hooks/useAnimations";
+import { useT } from "@/i18n";
 
-const steps = [
-  {
-    num: "01",
-    title: "Conversa",
-    description: "Entendemos seu negócio, seus clientes e o que precisa mudar.",
-  },
-  {
-    num: "02",
-    title: "Proposta",
-    description: "Escopo, prazo e preço claros antes de qualquer trabalho começar.",
-  },
-  {
-    num: "03",
-    title: "Construção",
-    description: "Você acompanha a evolução em versões navegáveis, no desktop e no celular.",
-  },
-  {
-    num: "04",
-    title: "Lançamento",
-    description: "Publicamos, medimos e seguimos ajustando com você.",
-  },
-];
+type Step = { num: string; title: string; description: string };
 
-function StepItem({ step, index }: { step: typeof steps[0]; index: number }) {
+function StepItem({ step, index }: { step: Step; index: number }) {
   const ref = useRef<HTMLLIElement>(null);
   const observe = useScrollReveal("-40px");
 
@@ -63,6 +43,8 @@ function StepItem({ step, index }: { step: typeof steps[0]; index: number }) {
 }
 
 export function Process() {
+  const t = useT().process;
+  const steps = t.steps.map((s, i) => ({ ...s, num: String(i + 1).padStart(2, "0") }));
   const titleRef = useRef<HTMLHeadingElement>(null);
   const observe = useScrollReveal("-60px");
 
@@ -81,7 +63,7 @@ export function Process() {
       >
         <div ref={titleRef} className="rv">
           <h2 style={{ fontSize: "clamp(30px, 4.4vw, 48px)", fontWeight: 700, maxWidth: "18ch" }}>
-            Do primeiro contato ao site no ar.
+            {t.title}
           </h2>
         </div>
 
