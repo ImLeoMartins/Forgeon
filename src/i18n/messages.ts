@@ -95,6 +95,10 @@ const pt = {
   footer: {
     rights: "Todos os direitos reservados.",
   },
+  whatsapp: {
+    message: "Olá! Vim pelo site da Forgeon e quero conversar sobre um projeto.",
+    float: "Conversar no WhatsApp",
+  },
 };
 
 export type Messages = typeof pt;
@@ -193,6 +197,10 @@ const es: Messages = {
   footer: {
     rights: "Todos los derechos reservados.",
   },
+  whatsapp: {
+    message: "¡Hola! Vengo de la web de Forgeon y quiero hablar sobre un proyecto.",
+    float: "Hablar por WhatsApp",
+  },
 };
 
 const en: Messages = {
@@ -288,6 +296,10 @@ const en: Messages = {
   },
   footer: {
     rights: "All rights reserved.",
+  },
+  whatsapp: {
+    message: "Hi! I found Forgeon through your website and I'd like to talk about a project.",
+    float: "Chat on WhatsApp",
   },
 };
 

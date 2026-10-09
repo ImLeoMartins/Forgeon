@@ -4,6 +4,7 @@ import { NAV_SYMBOL_PATHS, WORDMARK_PATH } from "@/lib/svgAssets";
 import { Menu, X } from "lucide-react";
 import { LangSwitcher } from "@/components/LangSwitcher";
 import { useT } from "@/i18n";
+import { useWhatsApp } from "@/lib/whatsapp";
 
 const sectionIds = ["servicos", "projetos", "processo"] as const;
 
@@ -12,6 +13,11 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const t = useT().nav;
+  const whatsapp = useWhatsApp();
+  const openWhatsApp = () => {
+    setMobileOpen(false);
+    window.open(whatsapp, "_blank", "noopener,noreferrer");
+  };
   const navLinks = [
     { href: "#servicos", label: t.services },
     { href: "#projetos", label: t.projects },
@@ -175,7 +181,7 @@ export function Navbar() {
           <LangSwitcher />
           <SpinningBorderButton
             variant="primary"
-            onClick={() => handleNavClick("#contato")}
+            onClick={openWhatsApp}
             style={{ fontSize: 13 }}
           >
             {t.whatsapp}
@@ -243,7 +249,7 @@ export function Navbar() {
           ))}
           <SpinningBorderButton
             variant="primary"
-            onClick={() => handleNavClick("#contato")}
+            onClick={openWhatsApp}
           >
             {t.whatsapp}
           </SpinningBorderButton>

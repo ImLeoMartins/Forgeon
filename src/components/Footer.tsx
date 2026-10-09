@@ -1,9 +1,11 @@
 import { NAV_SYMBOL_PATHS, WORDMARK_PATH } from "@/lib/svgAssets";
 import { MessageCircle } from "lucide-react";
 import { useT } from "@/i18n";
+import { useWhatsApp } from "@/lib/whatsapp";
 
 export function Footer() {
   const t = useT();
+  const whatsapp = useWhatsApp();
   const footerLinks = [
     { href: "#servicos", label: t.nav.services },
     { href: "#projetos", label: t.nav.projects },
@@ -88,7 +90,7 @@ export function Footer() {
             © {new Date().getFullYear()} Forgeon. {t.footer.rights}
           </span>
           <a
-            href="https://wa.me/5515996825326"
+            href={whatsapp}
             target="_blank"
             rel="noopener noreferrer"
             style={{

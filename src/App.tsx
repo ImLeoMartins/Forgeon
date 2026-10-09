@@ -7,6 +7,7 @@ import { Projects } from "@/components/Projects";
 import { Process } from "@/components/Process";
 import { CTA } from "@/components/CTA";
 import { Footer } from "@/components/Footer";
+import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 
 function App() {
   useScrollProgress();
@@ -27,6 +28,7 @@ function App() {
       </main>
 
       <Footer />
+      <WhatsAppFloat />
     </>
   );
 }

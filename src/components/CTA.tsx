@@ -2,9 +2,11 @@ import { useRef, useEffect } from "react";
 import { useScrollReveal } from "@/hooks/useAnimations";
 import { MessageCircle, Mail } from "lucide-react";
 import { useT } from "@/i18n";
+import { useWhatsApp } from "@/lib/whatsapp";
 
 export function CTA() {
   const t = useT().cta;
+  const whatsapp = useWhatsApp();
   const ref = useRef<HTMLDivElement>(null);
   const observe = useScrollReveal("-60px");
 
@@ -122,7 +124,7 @@ export function CTA() {
           >
             {/* WhatsApp button */}
             <a
-              href="https://wa.me/5515996825326"
+              href={whatsapp}
               target="_blank"
               rel="noopener noreferrer"
               style={{

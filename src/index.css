@@ -473,3 +473,21 @@ a { color: inherit; text-decoration: none; }
 }
 .lang-switch a:hover { color: var(--text, #F4F4F7); }
 .lang-switch a[aria-current="page"] { color: var(--text, #F4F4F7); background: rgba(69,77,252,.18); }
+
+/* Botão flutuante do WhatsApp */
+.wa-float {
+  position: fixed;
+  right: calc(20px + env(safe-area-inset-right, 0px));
+  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  z-index: 30;
+  width: 56px; height: 56px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  background: #25D366;
+  box-shadow: 0 10px 30px -6px rgba(37,211,102,.55), 0 0 0 1px rgba(255,255,255,.08) inset;
+  transition: transform 220ms cubic-bezier(.16,1,.3,1), box-shadow 220ms ease;
+}
+.wa-float:hover { transform: translateY(-3px) scale(1.04); box-shadow: 0 14px 36px -6px rgba(37,211,102,.7); }
+.wa-float:focus-visible { outline: 2px solid var(--peri); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .wa-float, .wa-float:hover { transition: none; transform: none; } }
