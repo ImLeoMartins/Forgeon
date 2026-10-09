@@ -40,8 +40,12 @@ function regionFromTimeZone(): Region | null {
 
 const CC_KEY = "forgeon-cc";
 
+// Uma consulta por página, compartilhada por todos os botões de WhatsApp.
+let cloudflareCountry: Promise<string | null> | null = null;
+const countryFromCloudflare = () => (cloudflareCountry ??= fetchCloudflareCountry());
+
 /** País do visitante segundo o Cloudflare (só funciona com o site atrás do Cloudflare). */
-async function countryFromCloudflare(): Promise<string | null> {
+async function fetchCloudflareCountry(): Promise<string | null> {
   try {
     const cached = sessionStorage.getItem(CC_KEY);
     if (cached) return cached;
@@ -65,22 +69,24 @@ async function countryFromCloudflare(): Promise<string | null> {
 
 /**
  * Link do WhatsApp com o número certo para o visitante e a mensagem já escrita
- * no idioma da página. Ordem: país do idioma do navegador (preferência do
- * usuário) > país do Cloudflare > fuso horário > idioma da página.
+ * no idioma da página. O número segue onde a pessoa está, não o idioma do
+ * navegador (um brasileiro na Espanha com navegador pt-BR vai para o Vinicius):
+ * país do Cloudflare > fuso horário > país do idioma do navegador > idioma da página.
  * `message` troca a mensagem padrão (por exemplo, citando o case que a pessoa viu).
  */
 export function useWhatsApp(message?: string): string {
   const lang = useLang();
   const t = useT();
-  const browserCountry = countryFromBrowser();
-  const [region, setRegion] = useState<Region>(() =>
-    browserCountry
-      ? regionOf(browserCountry)
-      : regionFromTimeZone() ?? (lang === "es" ? "europe" : "americas"),
-  );
+  // Palpite imediato, sem rede; o país do Cloudflare corrige logo depois.
+  const [region, setRegion] = useState<Region>(() => {
+    const browserCountry = countryFromBrowser();
+    return (
+      regionFromTimeZone() ??
+      (browserCountry ? regionOf(browserCountry) : lang === "es" ? "europe" : "americas")
+    );
+  });
 
   useEffect(() => {
-    if (browserCountry) return;
     let alive = true;
     countryFromCloudflare().then((cc) => {
       if (alive && cc) setRegion(regionOf(cc));
@@ -88,7 +94,7 @@ export function useWhatsApp(message?: string): string {
     return () => {
       alive = false;
     };
-  }, [browserCountry]);
+  }, []);
 
   return `https://wa.me/${NUMBERS[region]}?text=${encodeURIComponent(message ?? t.whatsapp.message)}`;
 }
