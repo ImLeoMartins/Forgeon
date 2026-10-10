@@ -20,7 +20,7 @@ type Meta = { title: string; description: string; image: string };
 const esc = (s: string) =>
   s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-/** `path` é o caminho sem o idioma: "/" na home, "/cases/ditaly/" num case. */
+/** `path` é o caminho sem o idioma: "/" na home, "/cases/los-rombos/" num case. */
 function seo(lang: Lang, path: string, url: string, meta: Meta): string {
   const alternates = [
     ...LANGS.map((l) => `<link rel="alternate" hreflang="${HTML_LANG[l]}" href="${SITE}/${l}${path}" />`),
