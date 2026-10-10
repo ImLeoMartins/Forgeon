@@ -1,5 +1,5 @@
 // Umami (https://umami.is): visitas, países e eventos, sem cookies.
-// O ID do site vem de VITE_UMAMI_ID (variável de ambiente no Cloudflare Pages).
+// O ID do site vem de VITE_UMAMI_ID (definido em .env.production).
 // Sem o ID, nada é carregado. Só conta no domínio oficial: prévias e localhost ficam de fora.
 const UMAMI_ID = import.meta.env.VITE_UMAMI_ID as string | undefined;
 
