@@ -13,8 +13,7 @@ export function CasePage({ slug }: { slug: string }) {
   const index = CASES.findIndex((c) => c.slug === slug);
   const visual = CASES[index];
   const item = t.projects.items[index];
-  // Com um case só, não há "próximo projeto".
-  const next = CASES.length > 1 ? t.projects.items[(index + 1) % CASES.length] : null;
+  const next = t.projects.items[(index + 1) % CASES.length];
 
   const observe = useScrollReveal("-60px");
   const reveal = useRef<(HTMLElement | null)[]>([]);
@@ -150,7 +149,6 @@ export function CasePage({ slug }: { slug: string }) {
 
       <CTA title={p.ctaTitle} lead={p.ctaLead} whatsappMessage={p.whatsappMessage.replace("{name}", item.name)} />
 
-      {next && (
       <nav className="cp-wrap cp-next" aria-label={p.next}>
         <a href={`/${lang}/cases/${next.slug}/`}>
           <span>{p.next}</span>
@@ -159,7 +157,6 @@ export function CasePage({ slug }: { slug: string }) {
           </strong>
         </a>
       </nav>
-      )}
     </main>
   );
 }

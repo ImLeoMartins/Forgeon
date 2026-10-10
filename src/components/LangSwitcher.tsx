@@ -4,7 +4,7 @@ import { LANGS, LANG_LABELS, rememberLang, useLang, useT } from "@/i18n";
 export function LangSwitcher({ size = 13 }: { size?: number }) {
   const current = useLang();
   const t = useT();
-  // Mantém a página atual: /pt/cases/los-rombos/ vira /es/cases/los-rombos/
+  // Mantém a página atual: /pt/cases/ditaly/ vira /es/cases/ditaly/
   const rest = window.location.pathname.slice(3) || "/";
 
   return (

@@ -27,7 +27,7 @@ export function Projects() {
 
   // Gira sozinho, devagar; para com o mouse ou o foco no carrossel e com movimento reduzido.
   useEffect(() => {
-    if (n < 2 || paused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (paused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const id = window.setInterval(() => setActive((a) => (a + 1) % n), AUTOPLAY_MS);
     return () => window.clearInterval(id);
   }, [paused, n]);
@@ -54,7 +54,7 @@ export function Projects() {
       <div style={{ maxWidth: 1240, margin: "0 auto", padding: "0 clamp(20px, 5vw, 60px)" }}>
         <div ref={titleRef} className="rv">
           <h2 style={{ fontSize: "clamp(30px, 4.4vw, 48px)", fontWeight: 700, maxWidth: "20ch" }}>{t.title}</h2>
-          {n > 1 && <p className="cases-hint">{t.hint}</p>}
+          <p className="cases-hint">{t.hint}</p>
         </div>
 
         <div
@@ -129,7 +129,6 @@ export function Projects() {
             })}
           </div>
 
-          {n > 1 && (
           <div className="cases-nav">
             <button type="button" className="cases-arrow" onClick={() => go(active - 1)} aria-label={t.prev}>
               <ArrowLeft size={18} />
@@ -150,7 +149,6 @@ export function Projects() {
               <ArrowRight size={18} />
             </button>
           </div>
-          )}
         </div>
       </div>
     </section>
